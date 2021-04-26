@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package protofiles;
+
+import "google/api/annotations.proto";
+
+option go_package = ".;protofiles";
+
+message GetAllCategoriesRequest {
+    int32 id = 1;
+}
+
+message GetAllCategoriesResponse {
+    repeated FinalSubCatg category_data = 1;
+}
+
+message FinalSubCatg {
+	Category categoryData = 1;   
+	repeated SubCategory subCategoryData = 2;
+}
+
+message Category {
+    string catg_name = 1;
+    string catg_desc = 2;
+    string catg_image = 3;
+}
+
+message SubCategory {
+    string sub_catg_name = 1;
+    string sub_catg_desc = 2;
+    string sub_catg_image = 3;
+}
+
+service ProductCatalogueService {
+	rpc GetAllCategories(GetAllCategoriesRequest) returns (GetAllCategoriesResponse) {
+		option (google.api.http) = {
+			get: "/v1/products/list_categories"
+		};
+	};
+}

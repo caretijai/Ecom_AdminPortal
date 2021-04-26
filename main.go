@@ -26,8 +26,12 @@ func main() {
 	s := srv.Server{}
 	go s.InitServer()
 
+	p := srv.ProductServer{}
+	go p.ProductServer()
+
 	// Get the mux router object
 	router := routers.InitRoutes()
+
 	// Create a negroni instance
 	n := negroni.Classic()
 	n.UseHandler(router)

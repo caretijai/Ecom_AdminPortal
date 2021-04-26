@@ -10,6 +10,7 @@ func InitRoutes() *mux.Router {
 
 	// Routes for the User entity
 	router = SetUserRoutes(router)
+	router = SetCategoryrRoutes(router)
 
 	return router
 }

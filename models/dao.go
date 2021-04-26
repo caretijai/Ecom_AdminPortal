@@ -12,4 +12,5 @@ type Database interface {
 	ReadAllCSPUser() ([]*pb.UserProfile, error)
 	ReadCustomerMgmt(id int64) (*entities.Customer, error)
 	ReadCustomerAddress(cust_id int64) ([]*pb.Address, error)
+	GetAllCategoriesData() []*pb.FinalSubCatg
 }

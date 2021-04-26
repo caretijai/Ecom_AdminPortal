@@ -8,6 +8,6 @@ import (
 
 // SetUserRoutes for handling user registration
 func SetUserRoutes(router *mux.Router) *mux.Router {
-	router.HandleFunc("/v1/users/list_data", controllers.GetUserDetail).Methods("GET")
+	router.HandleFunc("/v1/users/list_data", controllers.GetUserDetail).Methods("GET", "OPTIONS")
 	return router
 }

@@ -23,7 +23,7 @@ type Server struct {
 
 // InitServer function - Start gRPC server
 func (s *Server) InitServer() {
-	lis, err := net.Listen("tcp", ":"+os.Getenv("RPC_ADMIN_PORTAL_PORT"))
+	lis, err := net.Listen("tcp", ":"+os.Getenv("RPC_CAP_USERSRV_PORT"))
 	log.Printf("RPC_Server Running: %v", &lis)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

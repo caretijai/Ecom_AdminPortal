@@ -24,7 +24,7 @@ type Response struct {
 func GetUserData(w http.ResponseWriter, r *http.Request, token string) {
 	// processing request before gRPC server call
 	// Set up a connection to the server.
-	conn, err := grpc.Dial(":"+os.Getenv("RPC_ADMIN_PORTAL_PORT"), grpc.WithInsecure())
+	conn, err := grpc.Dial(":"+os.Getenv("RPC_CAP_USERSRV_PORT"), grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Did not connect: %v", err)
 	}
