@@ -1,0 +1,8 @@
+{ 
+    "Server": "0.0.0.0:8080",
+    "DBHost": "127.0.0.1:5432",
+    "DBUser": "postgres",
+    "DBPwd": "CRS@2021@WSX",
+    "Database": "careti_commerce_db",
+    "LogLevel": 4    
+}
