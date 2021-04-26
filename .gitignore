@@ -1,0 +1,6 @@
+.vscode/
+.log
+.idea
+.env
+
+launch.json
