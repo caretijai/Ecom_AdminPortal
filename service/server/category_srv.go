@@ -59,3 +59,13 @@ func (s *ProductServer) GetAllCategories(ctx context.Context, in *pb.GetAllCateg
 
 	return &pb.GetAllCategoriesResponse{CategoryData: categoryData}, nil
 }
+
+func (s *ProductServer) CreateCategory(ctx context.Context, in *pb.CreateCategoryRequest) (*pb.CreateCategoryResponse, error) {
+	log.Printf("Got request for listing create category....")
+
+	// Get all category data
+	categoryData := s.DB.CreateCategories()
+	log.Printf("new_cat_data: %v", categoryData)
+
+	return &pb.CreateCategoryResponse{Status: categoryData}, nil
+}

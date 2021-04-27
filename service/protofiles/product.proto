@@ -6,6 +6,19 @@ import "google/api/annotations.proto";
 
 option go_package = ".;protofiles";
 
+message CreateCategoryRequest {
+    string catg_name = 1;
+    string catg_desc = 2;
+    string catg_image = 3;
+    string sub_catg_name = 4;
+    string sub_catg_desc = 5;
+    string sub_catg_image = 6;
+}
+
+message CreateCategoryResponse {
+    bool status = 1;
+}
+
 message GetAllCategoriesRequest {
     int32 id = 1;
 }
@@ -37,4 +50,10 @@ service ProductCatalogueService {
 			get: "/v1/products/list_categories"
 		};
 	};
+
+    rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse) {
+        option (google.api.http) = {
+			post: "/v1/products/add_category"
+		};
+    }
 }

@@ -55,7 +55,7 @@ type SubCatgData struct {
 	SubCatgImage string
 }
 
-// ReadAllCSPUser fetches all the rows for a given user
+// func GetAllCategoriesData fetches all categories and related sub-categories from the database
 func (pgdb *PostgresDB) GetAllCategoriesData() []*pb.FinalSubCatg {
 	fmt.Println("GetAllCategoriesData database function called...")
 
@@ -77,4 +77,9 @@ func (pgdb *PostgresDB) GetAllCategoriesData() []*pb.FinalSubCatg {
 	}
 
 	return finalResult
+}
+
+func (pgdb *PostgresDB) CreateCategories() bool {
+
+	return true
 }

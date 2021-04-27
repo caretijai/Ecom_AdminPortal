@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductCatalogueServiceClient interface {
 	GetAllCategories(ctx context.Context, in *GetAllCategoriesRequest, opts ...grpc.CallOption) (*GetAllCategoriesResponse, error)
+	CreateCategory(ctx context.Context, in *CreateCategoryRequest, opts ...grpc.CallOption) (*CreateCategoryResponse, error)
 }
 
 type productCatalogueServiceClient struct {
@@ -37,11 +38,21 @@ func (c *productCatalogueServiceClient) GetAllCategories(ctx context.Context, in
 	return out, nil
 }
 
+func (c *productCatalogueServiceClient) CreateCategory(ctx context.Context, in *CreateCategoryRequest, opts ...grpc.CallOption) (*CreateCategoryResponse, error) {
+	out := new(CreateCategoryResponse)
+	err := c.cc.Invoke(ctx, "/protofiles.ProductCatalogueService/CreateCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductCatalogueServiceServer is the server API for ProductCatalogueService service.
 // All implementations must embed UnimplementedProductCatalogueServiceServer
 // for forward compatibility
 type ProductCatalogueServiceServer interface {
 	GetAllCategories(context.Context, *GetAllCategoriesRequest) (*GetAllCategoriesResponse, error)
+	CreateCategory(context.Context, *CreateCategoryRequest) (*CreateCategoryResponse, error)
 	mustEmbedUnimplementedProductCatalogueServiceServer()
 }
 
@@ -51,6 +62,9 @@ type UnimplementedProductCatalogueServiceServer struct {
 
 func (UnimplementedProductCatalogueServiceServer) GetAllCategories(context.Context, *GetAllCategoriesRequest) (*GetAllCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllCategories not implemented")
+}
+func (UnimplementedProductCatalogueServiceServer) CreateCategory(context.Context, *CreateCategoryRequest) (*CreateCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
 }
 func (UnimplementedProductCatalogueServiceServer) mustEmbedUnimplementedProductCatalogueServiceServer() {
 }
@@ -84,6 +98,24 @@ func _ProductCatalogueService_GetAllCategories_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductCatalogueService_CreateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductCatalogueServiceServer).CreateCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protofiles.ProductCatalogueService/CreateCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductCatalogueServiceServer).CreateCategory(ctx, req.(*CreateCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ProductCatalogueService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "protofiles.ProductCatalogueService",
 	HandlerType: (*ProductCatalogueServiceServer)(nil),
@@ -91,6 +123,10 @@ var _ProductCatalogueService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllCategories",
 			Handler:    _ProductCatalogueService_GetAllCategories_Handler,
+		},
+		{
+			MethodName: "CreateCategory",
+			Handler:    _ProductCatalogueService_CreateCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
