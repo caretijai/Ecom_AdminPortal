@@ -6,6 +6,7 @@ import (
 
 	// postgres driver
 
+	"CAP_AdminPortal/models/entities"
 	pb "CAP_AdminPortal/service/protofiles"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -79,7 +80,17 @@ func (pgdb *PostgresDB) GetAllCategoriesData() []*pb.FinalSubCatg {
 	return finalResult
 }
 
-func (pgdb *PostgresDB) CreateCategories() bool {
+func (pgdb *PostgresDB) CreateCategories(CatgName string, CatgDesc string, CatgImage string, SubCatgName string, SubCatgDesc string, SubCatgImage string) bool {
+	category := entities.Category{VertID: 1, CatgName: CatgName, CatgDesc: CatgDesc, CatgImage: CatgDesc, Active: 1}
+	result := pgdb.Handler.Debug().Create(&category) // pass pointer of data to Create
 
-	return true
+	log.Printf("db  category rows affected: %v, ID: %v", result.RowsAffected, category.ID)
+	if result.RowsAffected > 0 {
+		// subCategory := entities.SubCategory{CatgID: category.ID, SubCatgName: SubCatgName, SubCatgDesc: SubCatgDesc, SubCatgImage: SubCatgImage, Active: 1}
+		subCatResult := pgdb.Handler.Debug().Exec("INSERT INTO csp_sub_category(catg_id,sub_catg_name,sub_catg_desc,sub_catg_image,catg_image,active) VALUES(?,?,?,?,?,B'1')", category.ID, SubCatgName, SubCatgDesc, SubCatgImage, -1) // pass pointer of data to Create
+		log.Printf("db subCategory rows affected: %v", subCatResult.RowsAffected)
+
+		return subCatResult.RowsAffected > 0
+	}
+	return false
 }

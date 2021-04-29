@@ -13,4 +13,5 @@ require (
 	google.golang.org/grpc v1.37.0
 	google.golang.org/protobuf v1.26.0
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
+	gopkg.in/validator.v2 v2.0.0-20210331031555-b37d688a7fb0
 )

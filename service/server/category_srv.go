@@ -64,7 +64,7 @@ func (s *ProductServer) CreateCategory(ctx context.Context, in *pb.CreateCategor
 	log.Printf("Got request for listing create category....")
 
 	// Get all category data
-	categoryData := s.DB.CreateCategories()
+	categoryData := s.DB.CreateCategories(in.CatgDesc, in.CatgDesc, in.CatgImage, in.SubCatgName, in.SubCatgDesc, in.SubCatgImage)
 	log.Printf("new_cat_data: %v", categoryData)
 
 	return &pb.CreateCategoryResponse{Status: categoryData}, nil
