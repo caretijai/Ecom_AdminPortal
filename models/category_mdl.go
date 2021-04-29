@@ -51,9 +51,10 @@ type category struct {
 
 // SubCatgData type
 type SubCatgData struct {
-	SubCatgName  string
-	SubCatgDesc  string
-	SubCatgImage string
+	ID           int64  `json:"id"`
+	SubCatgName  string `json:"sub_catg_name"`
+	SubCatgDesc  string `json:"sub_catg_desc"`
+	SubCatgImage string `json:"sub_catg_image"`
 }
 
 // func GetAllCategoriesData fetches all categories and related sub-categories from the database
@@ -71,8 +72,8 @@ func (pgdb *PostgresDB) GetAllCategoriesData() []*pb.FinalSubCatg {
 	// get all sub-catg for category
 	for _, cat := range res {
 		log.Printf("category_row: %v", cat)
-		pgdb.Handler.Raw("SELECT sub_catg_name,sub_catg_desc,sub_catg_image FROM csp_sub_category WHERE catg_id=? ORDER BY sub_catg_name ASC;", cat.ID).Scan(&subCatRes)
-		categoryDat := &pb.Category{CatgName: cat.CatgName, CatgDesc: cat.CatgDesc, CatgImage: cat.CatgImage}
+		pgdb.Handler.Raw("SELECT id, sub_catg_name,sub_catg_desc,sub_catg_image FROM csp_sub_category WHERE catg_id=? ORDER BY sub_catg_name ASC;", cat.ID).Scan(&subCatRes)
+		categoryDat := &pb.Category{Id: int64(cat.ID), CatgName: cat.CatgName, CatgDesc: cat.CatgDesc, CatgImage: cat.CatgImage}
 
 		finalResult = append(finalResult, &pb.FinalSubCatg{CategoryData: categoryDat, SubCategoryData: subCatRes})
 	}
