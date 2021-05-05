@@ -19,6 +19,24 @@ message CreateCategoryResponse {
     bool status = 1;
 }
 
+message EditCategoryRequest {
+    int64 catg_id = 1;
+    string catg_name = 2;
+    string catg_desc = 3;
+}
+
+message EditCategoryResponse {
+    bool status = 1;
+}
+
+message RemoveCategoryRequest {
+    int64 catg_id = 1;
+}
+
+message RemoveCategoryResponse {
+    bool status = 1;
+}
+
 message GetAllCategoriesRequest {
     int32 id = 1;
 }
@@ -46,6 +64,24 @@ message SubCategory {
     string sub_catg_image = 4;
 }
 
+message EditSubCategoryRequest {
+    int64 sub_catg_id = 1;
+    string sub_catg_name = 2;
+    string sub_catg_desc = 3;
+}
+
+message EditSubCategoryResponse {
+    bool status = 1;
+}
+
+message RemoveSubCategoryRequest {
+    int64 sub_catg_id = 1;
+}
+
+message RemoveSubCategoryResponse {
+    bool status = 1;
+}
+
 service ProductCatalogueService {
 	rpc GetAllCategories(GetAllCategoriesRequest) returns (GetAllCategoriesResponse) {
 		option (google.api.http) = {
@@ -56,6 +92,30 @@ service ProductCatalogueService {
     rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse) {
         option (google.api.http) = {
 			post: "/v1/products/add_category"
+		};
+    }
+
+    rpc EditCategory(EditCategoryRequest) returns (EditCategoryResponse) {
+        option (google.api.http) = {
+			post: "/v1/products/edit_category"
+		};
+    }
+
+    rpc RemoveCategory(RemoveCategoryRequest) returns (RemoveCategoryResponse) {
+        option (google.api.http) = {
+			post: "/v1/products/remove_category"
+		};
+    }
+
+    rpc EditSubCategory(EditSubCategoryRequest) returns (EditSubCategoryResponse) {
+        option (google.api.http) = {
+			post: "/v1/products/edit_sub_category"
+		};
+    }
+
+    rpc RemoveSubCategory(RemoveSubCategoryRequest) returns (RemoveSubCategoryResponse) {
+        option (google.api.http) = {
+			post: "/v1/products/remove_sub_category"
 		};
     }
 }

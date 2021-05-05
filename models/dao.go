@@ -14,4 +14,8 @@ type Database interface {
 	ReadCustomerAddress(cust_id int64) ([]*pb.Address, error)
 	GetAllCategoriesData() []*pb.FinalSubCatg
 	CreateCategories(CatgName string, CatgDesc string, CatgImage string, SubCatgName string, SubCatgDesc string, SubCatgImage string) bool
+	EditCategory(CatgName string, CatgDesc string, catgID int64) bool
+	RemoveCategory(CatgId int64) bool
+	EditSubCategory(SubCatgId int64, SubCatgName string, SubCatgDesc string) bool
+	RemoveSubCategory(SubCatgId int64) bool
 }

@@ -95,3 +95,36 @@ func (pgdb *PostgresDB) CreateCategories(CatgName string, CatgDesc string, CatgI
 	}
 	return false
 }
+
+func (pgdb *PostgresDB) EditCategory(CatgName string, CatgDesc string, catgID int64) bool {
+	log.Printf("CatgName: %v, CatgDesc: %v, catgID: %v ", CatgName, CatgDesc, catgID)
+	category := entities.Category{}
+	result := pgdb.Handler.Debug().Exec("UPDATE csp_category SET catg_name=?, catg_desc=? WHERE id=?", CatgName, CatgDesc, catgID)
+	// result := pgdb.Handler.Debug().Model(&category).Where("id = ?", catgID).Update(CatgName, CatgDesc)
+
+	log.Printf("db  category rows affected: %v, ID: %v", result.RowsAffected, category.ID)
+	return result.RowsAffected > 0
+}
+
+func (pgdb *PostgresDB) RemoveCategory(catgID int64) bool {
+	result := pgdb.Handler.Debug().Exec("DELETE FROM csp_category WHERE id=?", catgID)
+	// result := pgdb.Handler.Debug().Delete(&category, catgID)
+
+	log.Printf("db category rows affected: %v, ID: %v", result.RowsAffected, catgID)
+	return result.RowsAffected > 0
+}
+
+func (pgdb *PostgresDB) EditSubCategory(SubCatgId int64, SubCatgName string, SubCatgDesc string) bool {
+	result := pgdb.Handler.Debug().Exec("UPDATE csp_sub_category SET sub_catg_name=?, sub_catg_desc=? WHERE id=?", SubCatgName, SubCatgDesc, SubCatgId)
+
+	log.Printf("db category rows affected: %v, ID: %v", result.RowsAffected, SubCatgId)
+	return result.RowsAffected > 0
+}
+
+func (pgdb *PostgresDB) RemoveSubCategory(SubCatgId int64) bool {
+	result := pgdb.Handler.Debug().Exec("DELETE FROM csp_sub_category WHERE id=?", SubCatgId)
+	// result := pgdb.Handler.Debug().Delete(&category, catgID)
+
+	log.Printf("db category rows affected: %v, ID: %v", result.RowsAffected, SubCatgId)
+	return result.RowsAffected > 0
+}
